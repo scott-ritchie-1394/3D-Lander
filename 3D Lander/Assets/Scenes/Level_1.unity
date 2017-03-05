@@ -37,7 +37,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657868, g: 0.49641263, b: 0.57481706, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -268,6 +268,8 @@ GameObject:
   - component: {fileID: 1555469960}
   - component: {fileID: 1555469959}
   - component: {fileID: 1555469964}
+  - component: {fileID: 1555469966}
+  - component: {fileID: 1555469965}
   m_Layer: 0
   m_Name: Ship
   m_TagString: Untagged
@@ -343,7 +345,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1555469958}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.84, y: 3, z: 0}
+  m_LocalPosition: {x: -28.3, y: 32.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -364,6 +366,33 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &1555469965
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1555469958}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5eb128b86e519a4f93569f37bc30731, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxThrusterPower: 9
+  thrusterPowerIncrement: 0.5
+  initialForce: 400
+  thrusterDelay: 2
+--- !u!114 &1555469966
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1555469958}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4fde22edcd77d264589a6d8d41ac477f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxTurnSpeed: 50
 --- !u!1 &1644306716
 GameObject:
   m_ObjectHideFlags: 0
@@ -507,10 +536,10 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1952591753}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: -10}
+  m_LocalRotation: {x: 0.10846267, y: -0, z: -0, w: 0.9941005}
+  m_LocalPosition: {x: 0, y: 22.3, z: -41.3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 12.453001, y: 0, z: 0}
