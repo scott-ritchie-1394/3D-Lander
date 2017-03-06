@@ -37,7 +37,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657868, g: 0.49641263, b: 0.57481706, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -495,6 +495,8 @@ GameObject:
   - component: {fileID: 844165279}
   - component: {fileID: 844165280}
   - component: {fileID: 844165281}
+  - component: {fileID: 844165283}
+  - component: {fileID: 844165282}
   m_Layer: 0
   m_Name: Ship
   m_TagString: Untagged
@@ -545,7 +547,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 844165274}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.23, z: 0.48}
+  m_LocalPosition: {x: -28.3, y: 25.5, z: 0.48}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1087697930}
@@ -592,6 +594,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd0683e4729044d41b8402a4729b6fc8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &844165282
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 844165274}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5eb128b86e519a4f93569f37bc30731, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxThrusterPower: 8
+  thrusterPowerIncrement: 1
+  initialForce: 400
+  thrusterDelay: 2
+--- !u!114 &844165283
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 844165274}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4fde22edcd77d264589a6d8d41ac477f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxTurnSpeed: 50
 --- !u!1 &1084117927
 GameObject:
   m_ObjectHideFlags: 0
@@ -1074,13 +1103,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1952591753}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: -10}
+  m_LocalRotation: {x: 0.09227639, y: -0, z: -0, w: 0.99573344}
+  m_LocalPosition: {x: -0.5, y: 15.2, z: -40.4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 10.589001, y: 0, z: 0}
 --- !u!1 &1993830451
 GameObject:
   m_ObjectHideFlags: 0
