@@ -9,6 +9,8 @@ public class CrashLanding : MonoBehaviour {
 	//public bools reporting landing state
 	public bool goodLanding = false;
 	public bool badLanding = false;
+	public float safeVel;
+
 	bool hasExploded = false;
 	bool hasLanded = false;
 
@@ -42,7 +44,15 @@ public class CrashLanding : MonoBehaviour {
 	
 	// Do things on Collision
 	void OnCollisionEnter (Collision Collider) { //Crash and Burn
-		if (Collider.gameObject.name == "Terrain" && hasLanded == false) {
+		bool safeAngle = ((transform.rotation.z > -30)&&(transform.rotation.z < 30));
+		bool safeSpeed = (Collider.relativeVelocity.magnitude < safeVel);
+
+		if ((Collider.gameObject.tag == "Pad") && safeAngle && safeSpeed) {
+			//print ("Yay.");
+			Destroy (Glow);
+			goodLanding = true;
+			hasLanded = true;
+		} else if(!hasLanded) {
 			//print ("Boom.");
 			badLanding = true;
 			//Break Cockpit and Legs, as well as ship 'core'
@@ -70,11 +80,6 @@ public class CrashLanding : MonoBehaviour {
 			iTween.FadeTo(ShipRC, 0.0f, 1.0f);
 			iTween.FadeTo(ShipLC, 0.0f, 1.0f);
 		
-		} else if (Collider.gameObject.name == "Pad0") {
-			//print ("Yay.");
-			Destroy (Glow);
-			goodLanding = true;
-			hasLanded = true;
 		}
 	}
 

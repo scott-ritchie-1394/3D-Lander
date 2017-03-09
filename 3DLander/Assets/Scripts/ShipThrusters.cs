@@ -12,7 +12,6 @@ public class ShipThrusters : MonoBehaviour {
 	public float fuelLeft;
 	public float fuelUseRate;            //rate of fuel usage per second
 	public float vel;
-	public float maxVelocityAllowed;
 	public SpriteRenderer thrusterGlow;
 
 	private Rigidbody ship;
@@ -51,14 +50,5 @@ public class ShipThrusters : MonoBehaviour {
 			thrusterGlow.color = new Color(thrusterGlow.color.r, thrusterGlow.color.g, thrusterGlow.color.b, 0f);
 		}
 		vel = ship.velocity.y;
-	}
-
-	void OnCollisionEnter ( Collision col ){
-		if (ship.velocity.y < maxVelocityAllowed) {
-			Debug.Log ("too fast");
-		} else {
-			Debug.Log ("good job");
-		}
-		Destroy (this);
 	}
 }
