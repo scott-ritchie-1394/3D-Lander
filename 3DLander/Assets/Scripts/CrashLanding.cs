@@ -10,6 +10,7 @@ public class CrashLanding : MonoBehaviour {
 	public bool goodLanding = false;
 	public bool badLanding = false;
 	bool hasExploded = false;
+	bool hasLanded = false;
 
 	//Initialize GameObjects
 	Rigidbody EyeRigidBody;
@@ -22,7 +23,7 @@ public class CrashLanding : MonoBehaviour {
 	GameObject ShipLC;
 	public ParticleSystem Boom;
 	GameObject Ship;
-	GameObject Pads;
+	GameObject Glow;
 
 	// Use this for initialization
 	void Awake () {
@@ -35,18 +36,19 @@ public class CrashLanding : MonoBehaviour {
 		Eye = GameObject.Find("EyeBall");
 		ShipRC = GameObject.Find ("SaucerR/Sphere");
 		ShipLC = GameObject.Find ("SaucerL/Sphere");
-		Pads = GameObject.Find ("PadArray");
+		Glow = GameObject.Find ("Glow");
  	}
 
 	
 	// Do things on Collision
 	void OnCollisionEnter (Collision Collider) { //Crash and Burn
-		if (Collider.gameObject.name == "Terrain") {
+		if (Collider.gameObject.name == "Terrain" && hasLanded == false) {
 			//print ("Boom.");
 			badLanding = true;
 			//Break Cockpit and Legs, as well as ship 'core'
 			Destroy (Cockpit);
 			Destroy (ShipF);
+			Destroy (Glow);
 			//Enable Physics on Ship halves and Eye
 			Rigidbody ShipLRigidBody = ShipL.AddComponent<Rigidbody>();
 			Rigidbody ShipRRigidBody = ShipR.AddComponent<Rigidbody>();
@@ -68,15 +70,11 @@ public class CrashLanding : MonoBehaviour {
 			iTween.FadeTo(ShipRC, 0.0f, 1.0f);
 			iTween.FadeTo(ShipLC, 0.0f, 1.0f);
 		
-		} else if (Collider.gameObject.name == "Pad0" ||
-			Collider.gameObject.name == "Pad1" ||
-			Collider.gameObject.name == "Pad2" ||
-			Collider.gameObject.name == "Pad3" ||
-			Collider.gameObject.name == "Pad4" ||
-			Collider.gameObject.name == "Pad5" ||
-			Collider.gameObject.name == "Pad6") {
+		} else if (Collider.gameObject.name == "Pad0") {
 			//print ("Yay.");
+			Destroy (Glow);
 			goodLanding = true;
+			hasLanded = true;
 		}
 	}
 
