@@ -13,7 +13,8 @@ public class ShipThrusters : MonoBehaviour {
 	public float fuelUseRate;            //rate of fuel usage per second
 	public float vel;
 	public SpriteRenderer thrusterGlow;
-
+	
+	private bool hasLanded;
 	private Rigidbody ship;
 	private float thrusterPower = 0;
 
@@ -34,11 +35,16 @@ public class ShipThrusters : MonoBehaviour {
 						thrusterPower = maxThrusterPower;
 				
 					ship.AddForce (transform.up * thrusterPower);
-					thrusterGlow.color = new Color(thrusterGlow.color.r, thrusterGlow.color.g, thrusterGlow.color.b, (thrusterPower / maxThrusterPower));
+					
+					if(!hasLanded){
+						thrusterGlow.color = new Color(thrusterGlow.color.r, thrusterGlow.color.g, thrusterGlow.color.b, (thrusterPower / maxThrusterPower));
+					}
 				} else {
 					thrusterPower -= thrusterPowerIncrement; //decrements the thruster power as long as the space bar isn't pressed;
 
-					thrusterGlow.color = new Color(thrusterGlow.color.r, thrusterGlow.color.g, thrusterGlow.color.b, 0f);
+					if(!hasLanded){
+						thrusterGlow.color = new Color(thrusterGlow.color.r, thrusterGlow.color.g, thrusterGlow.color.b, 0f);
+					}
 
 					if (thrusterPower < 0)
 						thrusterPower = 0;
@@ -47,8 +53,15 @@ public class ShipThrusters : MonoBehaviour {
 				thrusterDelay--;
 			}
 		} else {
-			thrusterGlow.color = new Color(thrusterGlow.color.r, thrusterGlow.color.g, thrusterGlow.color.b, 0f);
+			if(!hasLanded){
+				thrusterGlow.color = new Color(thrusterGlow.color.r, thrusterGlow.color.g, thrusterGlow.color.b, 0f);
+			}
 		}
 		vel = ship.velocity.y;
+	}
+	
+	void OnCollisionEnter(Collision c)
+	{
+		hasLanded = true;
 	}
 }
