@@ -13,6 +13,7 @@ public class CrashLanding : MonoBehaviour {
 
 	bool hasExploded = false;
 	bool hasLanded = false;
+	private AudioSource explodeSound;
 
 	//Initialize GameObjects
 	Rigidbody EyeRigidBody;
@@ -39,6 +40,8 @@ public class CrashLanding : MonoBehaviour {
 		ShipRC = GameObject.Find ("SaucerR/Sphere");
 		ShipLC = GameObject.Find ("SaucerL/Sphere");
 		Glow = GameObject.Find ("Glow");
+		AudioSource[] audioSources = GetComponents<AudioSource>();
+		explodeSound = audioSources [2];
  	}
 
 	
@@ -53,6 +56,7 @@ public class CrashLanding : MonoBehaviour {
 			goodLanding = true;
 			hasLanded = true;
 		} else if(!hasLanded) {
+			explodeSound.enabled = true;
 			//print ("Boom.");
 			badLanding = true;
 			//Break Cockpit and Legs, as well as ship 'core'
