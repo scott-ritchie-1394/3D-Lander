@@ -38,11 +38,10 @@ public class ShipThrusters : MonoBehaviour {
 
 					if (thrusterPower > maxThrusterPower)
 						thrusterPower = maxThrusterPower;
-				
-					ship.AddForce (transform.up * thrusterPower);
-					thrusterSound.enabled = true;
 
 					if(!hasLanded){
+						ship.AddForce (transform.up * thrusterPower);
+						thrusterSound.enabled = true;
 						thrusterGlow.color = new Color(thrusterGlow.color.r, thrusterGlow.color.g, thrusterGlow.color.b, (thrusterPower / maxThrusterPower));
 					}
 				} else {
