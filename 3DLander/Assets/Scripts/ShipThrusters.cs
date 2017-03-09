@@ -12,17 +12,21 @@ public class ShipThrusters : MonoBehaviour {
 	public float fuelLeft;
 	public float fuelUseRate;            //rate of fuel usage per second
 	public float vel;
-	public float maxVelocityAllowed;
+	public SpriteRenderer thrusterGlow;
 
+	private AudioSource thrusterSound;
+	private AudioSource thrusterShutdownSound;
+	private bool hasLanded;
 	private Rigidbody ship;
 	private float thrusterPower = 0;
-	private Rigidbody rigidBody;
 
 	void Start () {
 		ship = GetComponent<Rigidbody> ();  //finds the ship's rigidbody component
 		ship.AddForce (initialForce, 0, 0); //adds initial force defined earlier
 		fuelLeft = maxFuel;
-		rigidBody = GetComponent<Rigidbody> ();
+		AudioSource[] audioSources = GetComponents<AudioSource>();
+		thrusterSound = audioSources[0];
+		thrusterShutdownSound = audioSources[1];
 	}
 
 	void FixedUpdate () {
@@ -36,8 +40,18 @@ public class ShipThrusters : MonoBehaviour {
 						thrusterPower = maxThrusterPower;
 				
 					ship.AddForce (transform.up * thrusterPower);
+					thrusterSound.enabled = true;
+
+					if(!hasLanded){
+						thrusterGlow.color = new Color(thrusterGlow.color.r, thrusterGlow.color.g, thrusterGlow.color.b, (thrusterPower / maxThrusterPower));
+					}
 				} else {
+					thrusterSound.enabled = false;
 					thrusterPower -= thrusterPowerIncrement; //decrements the thruster power as long as the space bar isn't pressed;
+
+					if(!hasLanded){
+						thrusterGlow.color = new Color(thrusterGlow.color.r, thrusterGlow.color.g, thrusterGlow.color.b, 0f);
+					}
 
 					if (thrusterPower < 0)
 						thrusterPower = 0;
@@ -45,16 +59,17 @@ public class ShipThrusters : MonoBehaviour {
 			} else {
 				thrusterDelay--;
 			}
-		}
-		vel = rigidBody.velocity.y;
-	}
-
-	void OnCollisionEnter ( Collision col ){
-		if (rigidBody.velocity.y < maxVelocityAllowed) {
-			Debug.Log ("too fast");
 		} else {
-			Debug.Log ("good job");
+			if(!hasLanded){
+				thrusterGlow.color = new Color(thrusterGlow.color.r, thrusterGlow.color.g, thrusterGlow.color.b, 0f);
+			}
 		}
-		Destroy (this);
+		vel = ship.velocity.magnitude;
+	}
+	
+	void OnCollisionEnter(Collision c)
+	{
+		hasLanded = true;
+		thrusterShutdownSound.enabled = true;
 	}
 }

@@ -9,8 +9,11 @@ public class CrashLanding : MonoBehaviour {
 	//public bools reporting landing state
 	public bool goodLanding = false;
 	public bool badLanding = false;
+	public float safeVel;
+
 	bool hasExploded = false;
 	bool hasLanded = false;
+	private AudioSource explodeSound;
 
 	//Initialize GameObjects
 	Rigidbody EyeRigidBody;
@@ -37,44 +40,52 @@ public class CrashLanding : MonoBehaviour {
 		ShipRC = GameObject.Find ("SaucerR/Sphere");
 		ShipLC = GameObject.Find ("SaucerL/Sphere");
 		Glow = GameObject.Find ("Glow");
+		AudioSource[] audioSources = GetComponents<AudioSource>();
+		explodeSound = audioSources [2];
  	}
 
 	
 	// Do things on Collision
 	void OnCollisionEnter (Collision Collider) { //Crash and Burn
-		if (Collider.gameObject.name == "Terrain" && hasLanded == false) {
-			//print ("Boom.");
-			badLanding = true;
-			//Break Cockpit and Legs, as well as ship 'core'
-			Destroy (Cockpit);
-			Destroy (ShipF);
+		bool safeAngle = ((transform.rotation.z > -30)&&(transform.rotation.z < 30));
+		bool safeSpeed = (Collider.relativeVelocity.magnitude < safeVel);
+
+		if ((Collider.gameObject.tag == "Pad") && safeAngle && safeSpeed) {
+			//print ("Yay.");
 			Destroy (Glow);
-			//Enable Physics on Ship halves and Eye
-			Rigidbody ShipLRigidBody = ShipL.AddComponent<Rigidbody>();
-			Rigidbody ShipRRigidBody = ShipR.AddComponent<Rigidbody>();
-			EyeRigidBody = Eye.AddComponent<Rigidbody>();
-			//EXPLOSIONS
-			if (!hasExploded) {
-				Boom.Play ();
-				hasExploded = true;
+			goodLanding = true;
+			hasLanded = true;
+		} else if(!hasLanded) {
+			if (!badLanding) {
+				explodeSound.enabled = true;
+				//print ("Boom.");
+				badLanding = true;
+				//Break Cockpit and Legs, as well as ship 'core'
+				Destroy (Cockpit);
+				Destroy (ShipF);
+				Destroy (Glow);
+				//Enable Physics on Ship halves and Eye
+				Rigidbody ShipLRigidBody = ShipL.AddComponent<Rigidbody> ();
+				Rigidbody ShipRRigidBody = ShipR.AddComponent<Rigidbody> ();
+				EyeRigidBody = Eye.AddComponent<Rigidbody> ();
+				//EXPLOSIONS
+				if (!hasExploded) {
+					Boom.Play ();
+					hasExploded = true;
+				}
+				//Stop EyeBob
+				Object EyeScript = Eye.GetComponent ("EyeBob");
+				Destroy (EyeScript);
+				//shoot eye up
+				EyeRigidBody = Eye.GetComponent<Rigidbody> ();
+				EyeRigidBody.AddForce (0, 100, 0);
 			}
-			//Stop EyeBob
-			Object EyeScript = Eye.GetComponent("EyeBob");
-			Destroy (EyeScript);
-			//shoot eye up
-			EyeRigidBody = Eye.GetComponent<Rigidbody>();
-			EyeRigidBody.AddForce (0, 100, 0);
 			//Pop Eye
 			//bloodSpatter
 			//Fade out color and transparency of Ship Bits
 			iTween.FadeTo(ShipRC, 0.0f, 1.0f);
 			iTween.FadeTo(ShipLC, 0.0f, 1.0f);
 		
-		} else if (Collider.gameObject.name == "Pad0") {
-			//print ("Yay.");
-			Destroy (Glow);
-			goodLanding = true;
-			hasLanded = true;
 		}
 	}
 
