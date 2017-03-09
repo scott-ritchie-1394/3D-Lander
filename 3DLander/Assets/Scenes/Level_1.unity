@@ -114,7 +114,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 50771897}
   m_LocalRotation: {x: 1, y: -0, z: -0, w: 0}
-  m_LocalPosition: {x: -0.87000084, y: 1.11, z: -0.98}
+  m_LocalPosition: {x: -0.82, y: 0.61, z: -0.91}
   m_LocalScale: {x: 0.3, y: 0.5, z: 0.5}
   m_Children: []
   m_Father: {fileID: 844165278}
@@ -3476,15 +3476,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5eb128b86e519a4f93569f37bc30731, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxThrusterPower: 11
-  thrusterPowerIncrement: 5
+  maxThrusterPower: 15
+  thrusterPowerIncrement: 2
   initialForce: 400
-  thrusterDelay: 2
+  thrusterDelay: 8
   maxFuel: 15
   fuelLeft: 0
   fuelUseRate: 2
   vel: 0
   maxVelocityAllowed: -10
+  thrusterGlow: {fileID: 50771900}
 --- !u!114 &844165283
 MonoBehaviour:
   m_ObjectHideFlags: 0

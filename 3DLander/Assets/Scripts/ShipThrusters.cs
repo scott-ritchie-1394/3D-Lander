@@ -13,16 +13,15 @@ public class ShipThrusters : MonoBehaviour {
 	public float fuelUseRate;            //rate of fuel usage per second
 	public float vel;
 	public float maxVelocityAllowed;
+	public SpriteRenderer thrusterGlow;
 
 	private Rigidbody ship;
 	private float thrusterPower = 0;
-	private Rigidbody rigidBody;
 
 	void Start () {
 		ship = GetComponent<Rigidbody> ();  //finds the ship's rigidbody component
 		ship.AddForce (initialForce, 0, 0); //adds initial force defined earlier
 		fuelLeft = maxFuel;
-		rigidBody = GetComponent<Rigidbody> ();
 	}
 
 	void FixedUpdate () {
@@ -36,8 +35,11 @@ public class ShipThrusters : MonoBehaviour {
 						thrusterPower = maxThrusterPower;
 				
 					ship.AddForce (transform.up * thrusterPower);
+					thrusterGlow.color = new Color(thrusterGlow.color.r, thrusterGlow.color.g, thrusterGlow.color.b, (thrusterPower / maxThrusterPower));
 				} else {
 					thrusterPower -= thrusterPowerIncrement; //decrements the thruster power as long as the space bar isn't pressed;
+
+					thrusterGlow.color = new Color(thrusterGlow.color.r, thrusterGlow.color.g, thrusterGlow.color.b, 0f);
 
 					if (thrusterPower < 0)
 						thrusterPower = 0;
@@ -45,12 +47,14 @@ public class ShipThrusters : MonoBehaviour {
 			} else {
 				thrusterDelay--;
 			}
+		} else {
+			thrusterGlow.color = new Color(thrusterGlow.color.r, thrusterGlow.color.g, thrusterGlow.color.b, 0f);
 		}
-		vel = rigidBody.velocity.y;
+		vel = ship.velocity.y;
 	}
 
 	void OnCollisionEnter ( Collision col ){
-		if (rigidBody.velocity.y < maxVelocityAllowed) {
+		if (ship.velocity.y < maxVelocityAllowed) {
 			Debug.Log ("too fast");
 		} else {
 			Debug.Log ("good job");
