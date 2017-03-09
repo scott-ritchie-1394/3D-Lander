@@ -57,7 +57,7 @@ public class ShipThrusters : MonoBehaviour {
 				thrusterGlow.color = new Color(thrusterGlow.color.r, thrusterGlow.color.g, thrusterGlow.color.b, 0f);
 			}
 		}
-		vel = ship.velocity.y;
+		vel = ship.velocity.magnitude;
 	}
 	
 	void OnCollisionEnter(Collision c)
