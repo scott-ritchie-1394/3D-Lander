@@ -3366,10 +3366,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5eb128b86e519a4f93569f37bc30731, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxThrusterPower: 8
-  thrusterPowerIncrement: 1
+  maxThrusterPower: 11
+  thrusterPowerIncrement: 5
   initialForce: 400
   thrusterDelay: 2
+  maxFuel: 15
+  fuelLeft: 0
+  fuelUseRate: 2
+  vel: 0
+  maxVelocityAllowed: -10
 --- !u!114 &844165283
 MonoBehaviour:
   m_ObjectHideFlags: 0
