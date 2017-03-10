@@ -29,7 +29,7 @@ public class CameraControls : MonoBehaviour {
 			vertRotate = 4.0f;
 		if (vertRotate < -4.0f)
 			vertRotate = -4.0f;
-		print (horizRotate);
+		//print (horizRotate);
 
 		//Rotate around the ship, fairly easy stuff
 		transform.RotateAround (Ship.transform.position,transform.up,-horizRotate * 20 *Time.deltaTime);
