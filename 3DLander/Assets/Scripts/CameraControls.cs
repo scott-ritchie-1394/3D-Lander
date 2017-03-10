@@ -32,8 +32,8 @@ public class CameraControls : MonoBehaviour {
 		//print (horizRotate);
 
 		//Rotate around the ship, fairly easy stuff
-		transform.RotateAround (Ship.transform.position,transform.up,-horizRotate * 20 *Time.deltaTime);
-		transform.RotateAround (Ship.transform.position, transform.right,vertRotate * 20 * Time.deltaTime);
+		transform.RotateAround (Ship.transform.position, Ship.transform.up,-horizRotate * 20 *Time.deltaTime);
+		transform.RotateAround (Ship.transform.position, Ship.transform.right,vertRotate * 20 * Time.deltaTime);
 
 		//Updates the new offset after rotation
 		offset = transform.position - Ship.transform.position;

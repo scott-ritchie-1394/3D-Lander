@@ -13,7 +13,9 @@ public class ShipThrusters : MonoBehaviour {
 	public float fuelUseRate;            //rate of fuel usage per second
 	public float vel;
 	public SpriteRenderer thrusterGlow;
-	
+
+	private AudioSource thrusterSound;
+	private AudioSource thrusterShutdownSound;
 	private bool hasLanded;
 	private Rigidbody ship;
 	private float thrusterPower = 0;
@@ -22,6 +24,9 @@ public class ShipThrusters : MonoBehaviour {
 		ship = GetComponent<Rigidbody> ();  //finds the ship's rigidbody component
 		ship.AddForce (initialForce, 0, 0); //adds initial force defined earlier
 		fuelLeft = maxFuel;
+		AudioSource[] audioSources = GetComponents<AudioSource>();
+		thrusterSound = audioSources[0];
+		thrusterShutdownSound = audioSources[1];
 	}
 
 	void FixedUpdate () {
@@ -33,13 +38,14 @@ public class ShipThrusters : MonoBehaviour {
 
 					if (thrusterPower > maxThrusterPower)
 						thrusterPower = maxThrusterPower;
-				
-					ship.AddForce (transform.up * thrusterPower);
-					
+
 					if(!hasLanded){
+						ship.AddForce (transform.up * thrusterPower);
+						thrusterSound.enabled = true;
 						thrusterGlow.color = new Color(thrusterGlow.color.r, thrusterGlow.color.g, thrusterGlow.color.b, (thrusterPower / maxThrusterPower));
 					}
 				} else {
+					thrusterSound.enabled = false;
 					thrusterPower -= thrusterPowerIncrement; //decrements the thruster power as long as the space bar isn't pressed;
 
 					if(!hasLanded){
@@ -63,5 +69,6 @@ public class ShipThrusters : MonoBehaviour {
 	void OnCollisionEnter(Collision c)
 	{
 		hasLanded = true;
+		thrusterShutdownSound.enabled = true;
 	}
 }

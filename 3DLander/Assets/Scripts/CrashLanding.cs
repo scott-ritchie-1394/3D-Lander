@@ -13,6 +13,7 @@ public class CrashLanding : MonoBehaviour {
 
 	bool hasExploded = false;
 	bool hasLanded = false;
+	private AudioSource explodeSound;
 
 	//Initialize GameObjects
 	Rigidbody EyeRigidBody;
@@ -39,6 +40,8 @@ public class CrashLanding : MonoBehaviour {
 		ShipRC = GameObject.Find ("SaucerR/Sphere");
 		ShipLC = GameObject.Find ("SaucerL/Sphere");
 		Glow = GameObject.Find ("Glow");
+		AudioSource[] audioSources = GetComponents<AudioSource>();
+		explodeSound = audioSources [2];
  	}
 
 	
@@ -53,27 +56,30 @@ public class CrashLanding : MonoBehaviour {
 			goodLanding = true;
 			hasLanded = true;
 		} else if(!hasLanded) {
-			//print ("Boom.");
-			badLanding = true;
-			//Break Cockpit and Legs, as well as ship 'core'
-			Destroy (Cockpit);
-			Destroy (ShipF);
-			Destroy (Glow);
-			//Enable Physics on Ship halves and Eye
-			Rigidbody ShipLRigidBody = ShipL.AddComponent<Rigidbody>();
-			Rigidbody ShipRRigidBody = ShipR.AddComponent<Rigidbody>();
-			EyeRigidBody = Eye.AddComponent<Rigidbody>();
-			//EXPLOSIONS
-			if (!hasExploded) {
-				Boom.Play ();
-				hasExploded = true;
+			if (!badLanding) {
+				explodeSound.enabled = true;
+				//print ("Boom.");
+				badLanding = true;
+				//Break Cockpit and Legs, as well as ship 'core'
+				Destroy (Cockpit);
+				Destroy (ShipF);
+				Destroy (Glow);
+				//Enable Physics on Ship halves and Eye
+				Rigidbody ShipLRigidBody = ShipL.AddComponent<Rigidbody> ();
+				Rigidbody ShipRRigidBody = ShipR.AddComponent<Rigidbody> ();
+				EyeRigidBody = Eye.AddComponent<Rigidbody> ();
+				//EXPLOSIONS
+				if (!hasExploded) {
+					Boom.Play ();
+					hasExploded = true;
+				}
+				//Stop EyeBob
+				Object EyeScript = Eye.GetComponent ("EyeBob");
+				Destroy (EyeScript);
+				//shoot eye up
+				EyeRigidBody = Eye.GetComponent<Rigidbody> ();
+				EyeRigidBody.AddForce (0, 100, 0);
 			}
-			//Stop EyeBob
-			Object EyeScript = Eye.GetComponent("EyeBob");
-			Destroy (EyeScript);
-			//shoot eye up
-			EyeRigidBody = Eye.GetComponent<Rigidbody>();
-			EyeRigidBody.AddForce (0, 100, 0);
 			//Pop Eye
 			//bloodSpatter
 			//Fade out color and transparency of Ship Bits
