@@ -9,6 +9,7 @@ public class CrashLanding : MonoBehaviour {
 	//public bools reporting landing state
 	public bool goodLanding = false;
 	public bool badLanding = false;
+	public bool onPad = false;
 	public float safeVel;
 
 	bool hasExploded = false;
@@ -47,11 +48,13 @@ public class CrashLanding : MonoBehaviour {
 	
 	// Do things on Collision
 	void OnCollisionEnter (Collision Collider) { //Crash and Burn
-		bool safeAngle = ((transform.rotation.z > -30)&&(transform.rotation.z < 30));
+		bool safeAngle = ((transform.rotation.z > -.15f)&&(transform.rotation.z < .15f));
 		bool safeSpeed = (Collider.relativeVelocity.magnitude < safeVel);
 
-		if ((Collider.gameObject.tag == "Pad") && safeAngle && safeSpeed) {
+		if (safeAngle && safeSpeed) {
 			//print ("Yay.");
+			if(Collider.gameObject.tag == "Pad")
+				onPad = true;
 			Destroy (Glow);
 			goodLanding = true;
 			hasLanded = true;

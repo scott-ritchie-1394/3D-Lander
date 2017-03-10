@@ -10,6 +10,7 @@ public class HUDScript : MonoBehaviour {
 	public ShipThrusters shipThrusters;
 	public Text fuelText;
 	public Text velocityText;
+	public Text padLandingText;
 	public CrashLanding crashLanding;
 	public Text badLandingText;
 	public Text goodLandingText;
@@ -51,6 +52,8 @@ public class HUDScript : MonoBehaviour {
 		
 		if(hasSetLandingText == false && goodLanding == true)
 		{
+			if(crashLanding.onPad)
+				padLandingText.text = "Good Zone Selection!";
 			MoveButtonDown(restartButtonGo);
 			MoveButtonDown(quitButtonGo);
 			goodLandingText.text = "Good Landing!";
