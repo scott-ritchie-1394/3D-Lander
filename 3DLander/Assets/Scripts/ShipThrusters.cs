@@ -25,8 +25,8 @@ public class ShipThrusters : MonoBehaviour {
 		ship.AddForce (initialForce, 0, 0); //adds initial force defined earlier
 		fuelLeft = maxFuel;
 		AudioSource[] audioSources = GetComponents<AudioSource>();
-		thrusterSound = audioSources[0];
-		thrusterShutdownSound = audioSources[1];
+		thrusterSound = audioSources[1];
+		thrusterShutdownSound = audioSources[2];
 	}
 
 	void FixedUpdate () {
@@ -68,7 +68,11 @@ public class ShipThrusters : MonoBehaviour {
 	
 	void OnCollisionEnter(Collision c)
 	{
+		if(hasLanded == false)
+		{
+			thrusterShutdownSound.enabled = true;
+			thrusterShutdownSound.Play();
+		}
 		hasLanded = true;
-		thrusterShutdownSound.enabled = true;
 	}
 }
